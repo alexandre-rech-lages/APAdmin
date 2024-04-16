@@ -21,7 +21,7 @@ public class Program
 
         var app = builder.Build();
 
-        app.MigrateDatabase();
+        //app.MigrateDatabase();
 
         app.UseMiddleware<ExceptionHandlingMiddleware>();
 
