@@ -13,9 +13,11 @@ public class APAdminDbContextFactory : IDesignTimeDbContextFactory<APAdminDbCont
             .AddJsonFile("appsettings.json")
             .Build();
 
-        var connectionString = config.GetConnectionString("SqlServer");
+        var connectionString = config.GetConnectionString("MySql");
 
-        builder.UseSqlServer(connectionString);
+        builder
+            .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+            .EnableDetailedErrors(true);
 
         return new APAdminDbContext(builder.Options);
     }

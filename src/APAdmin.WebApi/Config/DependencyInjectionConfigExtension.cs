@@ -14,13 +14,14 @@ public static class DependencyInjectionConfigExtension
 {
     public static void ConfigureDependencyInjection(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("SqlServer");
+        var connectionString = configuration.GetConnectionString("MySql");
 
         if (string.IsNullOrEmpty(connectionString))
-            throw new InvalidOperationException(nameof(connectionString));
+            throw new InvalidOperationException(nameof(connectionString));        
 
         services.AddDbContext<IUnitOfWork, APAdminDbContext>(options =>
-            options.UseSqlServer(connectionString).EnableDetailedErrors(true));
+            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+            .EnableDetailedErrors(true));
 
         services.AddTransient<ITeamRepository, TeamRepositoryOrm>();
         services.AddTransient<IStudentRepository, StudentRepositoryOrm>();
